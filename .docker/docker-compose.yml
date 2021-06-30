@@ -1,0 +1,72 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: template
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: laravel8
+    container_name: template-app
+    restart: unless-stopped
+    working_dir: /var/www/app/  
+    volumes:
+      - ../:/var/www/app:cached
+    networks:
+      - template
+    ports:
+      - 8010:8080
+
+######## POSTGRES ########
+  postgres:
+    image: postgres:13.0-alpine
+    restart: unless-stopped
+    container_name: template-postgres
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+    volumes:
+      - ~/.docker-storage/app-postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - template
+
+
+  nginx:
+    image: nginx:alpine
+    container_name: template-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./nginx:/etc/nginx/conf.d/
+    networks:
+      - template
+  
+######## REDIS ########
+  redis:
+    image: redis:6.0.6
+    container_name: template-redis
+    volumes:
+      - ~/.docker-storage/app-redis:/data
+    ports:
+      - 6379:6379
+    networks:
+      - template
+
+networks:
+  template:
+    driver: bridge
+
+
+
+
+
+
+
+
+  

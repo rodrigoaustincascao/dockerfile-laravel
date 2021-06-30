@@ -1,0 +1,20 @@
+{
+	"name": "app",
+	"service": "app",
+	"workspaceFolder": "/var/www/app/",
+	"dockerComposeFile": "../.docker/docker-compose.yml",
+	"remoteUser": "template",
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+	// Add the IDs of extensions you want installed when the container is created in the array below.
+	"extensions": [
+		"bmewburn.vscode-intelephense-client",
+		"octref.vetur",
+		"vuetifyjs.vuetify-vscode",
+		"dbaeumer.vscode-eslint",
+		"lukas-tr.materialdesignicons-intellisense",
+		"ckolkman.vscode-postgres",
+		"graphql.vscode-graphql"
+	],
+}
