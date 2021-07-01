@@ -14,10 +14,14 @@ RUN apt-get update && apt-get install -y \
   zip \
   unzip \
   libpq5 \
-  libpq-dev 
+  libpq-dev \
+  zsh  
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# OhMyZsh
+RUN curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pgsql pdo pdo_pgsql
@@ -33,6 +37,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN echo 'export PATH="$PATH:$HOME/.config/composer/vendor/bin"' >> ~/.zshrc
 
 RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash
 RUN apt-get install -y nodejs
@@ -48,7 +53,8 @@ RUN mkdir -p /home/$user/.composer && \
 
 
 # Set working directory
-WORKDIR /var/www/app
+WORKDIR /var/www/
 
+EXPOSE 8080 8000
 
 USER $user

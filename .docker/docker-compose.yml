@@ -10,13 +10,13 @@ services:
     image: laravel8
     container_name: template-app
     restart: unless-stopped
-    working_dir: /var/www/app/  
+    working_dir: /var/www/ 
     volumes:
-      - ../:/var/www/app:cached
+      - ../:/var/www/:cached
     networks:
       - template
     ports:
-      - 8010:8080
+      - 8000:8080
 
 ######## POSTGRES ########
   postgres:
@@ -40,9 +40,9 @@ services:
     container_name: template-nginx
     restart: unless-stopped
     ports:
-      - 8000:80
+      - 8000:8080
     volumes:
-      - ./:/var/www
+      - ./:/var/www/
       - ./nginx:/etc/nginx/conf.d/
     networks:
       - template
