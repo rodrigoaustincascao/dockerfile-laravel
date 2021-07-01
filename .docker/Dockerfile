@@ -51,10 +51,11 @@ RUN mkdir -p /home/$user/.composer && \
   chown -R $user:$user /home/$user && \
   chown -R $user:$user /opt/composer
 
-
 # Set working directory
 WORKDIR /var/www/
 
-EXPOSE 8080 8000
-
 USER $user
+
+EXPOSE 9000 
+
+CMD ["php-fpm"]
